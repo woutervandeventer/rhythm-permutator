@@ -1,19 +1,57 @@
-const notesPerBar = 4
-const combinations = 2 ** notesPerBar - 1
+const output = <HTMLDivElement>document.getElementById("bars")
+const input = <HTMLInputElement>document.getElementById("len")
+const button = <HTMLButtonElement>document.getElementById("generateButton")
 
-const bars = Array<number[]>(combinations)
+function permutate(notesPerBar: number) {
+    const combinations = 2 ** notesPerBar - 1
+    const bars = Array<boolean[]>(combinations)
 
-for (let i = 0; i < bars.length; i++) {
-    bars[i] = Array(notesPerBar)
+    for (let i = 0; i < bars.length; i++) {
+        bars[i] = Array(notesPerBar)
 
-    // Binary representation of combination of notes in a bar
-    const combination = i + 1
+        // Binary representation of combination of notes in a bar
+        const combination = i + 1
 
-    for (let j = 0; j < notesPerBar; j++) {
-        if (((1 << j) & combination) !== 0) {
-            bars[i][j] = 1
-        } else {
-            bars[i][j] = 0
+        for (let j = 0; j < notesPerBar; j++) {
+            if (((1 << j) & combination) !== 0) {
+                bars[i][j] = true
+            } else {
+                bars[i][j] = false
+            }
         }
     }
+
+    return bars
 }
+
+function clearList() {
+    output.textContent = ""
+}
+
+function listPermutations() {
+    const notesPerBar = parseInt(input.value)
+    const permutations = permutate(notesPerBar)
+
+    const count = document.createElement("h2")
+    count.innerText = `${permutations.length} permutations\n`
+    output.append(count)
+
+    let str = ""
+    for (let i = 0; i < permutations.length; i++) {
+        for (let j = 0; j < notesPerBar; j++) {
+            str += " "
+            str += permutations[i][j] ? "1" : "0"
+        }
+        str += "\n"
+    }
+    const outputStr = document.createElement("div")
+    outputStr.innerText = str
+    output.append(outputStr)
+}
+
+function handleClick() {
+    clearList()
+    listPermutations()
+}
+
+button.addEventListener("click", handleClick)
