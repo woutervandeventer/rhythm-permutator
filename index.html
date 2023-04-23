@@ -8,7 +8,15 @@
     <script src="dist/index.js" defer></script>
 
     <body>
-        <input type="number" name="barLength" id="len" min="1" max="16" />
+        <label for="barLength">Notes per bar (1-16):</label>
+        <input
+            type="number"
+            name="barLength"
+            id="len"
+            value="4"
+            min="1"
+            max="16"
+        />
         <button type="button" id="generateButton">Generate permutations</button>
         <div id="bars"></div>
     </body>

@@ -23,9 +23,8 @@ function permutate(notesPerBar) {
 function clearList() {
     output.textContent = "";
 }
-function listPermutations() {
-    const notesPerBar = parseInt(input.value);
-    const permutations = permutate(notesPerBar);
+function listPermutations(permutations) {
+    const notesPerBar = permutations[0].length;
     const count = document.createElement("h2");
     count.innerText = `${permutations.length} permutations\n`;
     output.append(count);
@@ -43,6 +42,8 @@ function listPermutations() {
 }
 function handleClick() {
     clearList();
-    listPermutations();
+    const notesPerBar = parseInt(input.value);
+    const p = permutate(notesPerBar);
+    listPermutations(p);
 }
 button.addEventListener("click", handleClick);
